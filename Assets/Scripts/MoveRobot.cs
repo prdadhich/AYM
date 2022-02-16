@@ -22,7 +22,7 @@ public class MoveRobot : MonoBehaviour
        
             agent.SetDestination(PlayAudio.LocationTransform.position);
             animator.SetBool("isWalking", _isWalking);
-            if (agent.remainingDistance > 0.2)
+            if (agent.remainingDistance > 0.01)
             {
                 _isWalking = true;
 

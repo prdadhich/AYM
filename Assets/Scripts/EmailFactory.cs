@@ -26,7 +26,7 @@ public class EmailFactory : MonoBehaviour
         mail.Body = "testing";
 
 
-        SmtpServer.Credentials = new System.Net.NetworkCredential("prdadhich7@gmail.com", "Raprchsnpr") as ICredentialsByHost; SmtpServer.EnableSsl = true;
+        SmtpServer.Credentials = new System.Net.NetworkCredential("YourEmail", "Password") as ICredentialsByHost; SmtpServer.EnableSsl = true;
         ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
             return true;
