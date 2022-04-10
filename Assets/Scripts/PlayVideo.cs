@@ -16,6 +16,8 @@ public class PlayVideo : MonoBehaviour
 
 
     public GameObject Audio;
+    public GameObject VideoButton;
+
     PlayAudio _audio;
     // Start is called before the first frame update
     void Start()
@@ -23,8 +25,9 @@ public class PlayVideo : MonoBehaviour
         videoPlayer = GetComponent<VideoPlayer>();
         English = Resources.Load<VideoClip>("English") as VideoClip;
         Arabic = Resources.Load<VideoClip>("Arabic") as VideoClip;
+        
         _audio = Audio.GetComponent<PlayAudio>();
-
+        VideoButton.SetActive (false);
     }
 
     // Update is called once per frame
@@ -41,6 +44,8 @@ public class PlayVideo : MonoBehaviour
     {
         videoPlayer.clip = English;
         videoPlayer.Play();
+        VideoButton.SetActive(true);
+
         if (_isArabic)
         {
             _isEnglish = false;
@@ -68,6 +73,8 @@ public class PlayVideo : MonoBehaviour
         }
         videoPlayer.clip = Arabic;
         videoPlayer.Play();
+        VideoButton.SetActive(true);
+
 
 
     }
@@ -83,6 +90,23 @@ public class PlayVideo : MonoBehaviour
             _isEnglish = false;
             _isArabic=false;
         
+    }
+
+
+    public void Pause()
+    {
+        videoPlayer.Pause();
+        videoPlayer.Stop();
+        _audio.PlaySignUp();
+
+
+    }
+
+
+    public void OpenBrowser()
+    {
+
+        Application.OpenURL("www.google.com");
     }
 
 }

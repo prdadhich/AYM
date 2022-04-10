@@ -6,7 +6,8 @@ using Microsoft.MixedReality.Toolkit.Utilities;
 
 public class CheckCollision : MonoBehaviour
 {
-    
+   
+
    //public Collider green;
     private bool isCollsiion = false;
     private GameObject hand;
@@ -30,10 +31,14 @@ public class CheckCollision : MonoBehaviour
     private float anglePerItem;
     private int randomTime;
     private int itemNumber;
-    private bool firstTime = true;
+    public bool firstTime = true;
+
+    private bool RotateAngleGreater = false;
     // Start is called before the first frame update
     void Start()
     {
+        
+
         anglePerItem = 360 / 7;
         /*foreach(var col in winner)
         {
@@ -51,24 +56,34 @@ public class CheckCollision : MonoBehaviour
             Microsoft.MixedReality.Toolkit.Input.HandJointUtils.TryGetJointPose(TrackedHandJoint.IndexTip, Handedness.Right, out MixedRealityPose pose);
             oldDir = collPos - this.transform.position;
             newDir = pose.Position - this.transform.position;
-           var dot = Vector3.Dot(oldDir, newDir);
+            var dot = Vector3.Dot(oldDir, newDir);
             var magOld = Vector3.Magnitude(oldDir);
             var magNew = Vector3.Magnitude(newDir);
             var angle = Mathf.Acos((dot) / (magOld * magNew));
             transform.rotation = Quaternion.AngleAxis(angle* Mathf.Rad2Deg, rotAxis);
+            if(angle > 1 )
+            {
+                RotateAngleGreater = true;
+            }
                 
         }
-        if (spinning && isCollsiion == false)
-        {
-            randomTime = Random.Range(1, 4);
-            itemNumber = Random.Range(0, prize.Count);
-            float maxAngle = 360 * randomTime + (itemNumber* anglePerItem);
 
-            StartCoroutine(SpinTheWheel(5 * randomTime, maxAngle));
-           // Invoke("GameFinished",8*randomTime*Time.deltaTime);
-            // StartCoroutine("rotatethis");
+        if(RotateAngleGreater)
+        {
+            if (spinning && isCollsiion == false)
+            {
+                randomTime = Random.Range(1, 2);
+                itemNumber = Random.Range(0, prize.Count);
+                float maxAngle = 360 * randomTime + (itemNumber * anglePerItem);
+
+                StartCoroutine(SpinTheWheel(5 * randomTime, maxAngle));
+                // Invoke("GameFinished",8*randomTime*Time.deltaTime);
+                // StartCoroutine("rotatethis");
+
+            }
 
         }
+        
 
     }
     /* private void OnCollisionEnter(Collision other)
@@ -93,11 +108,15 @@ public class CheckCollision : MonoBehaviour
     {
         if (collision.gameObject.name == "Right IndexTip")
         {
+            if(RotateAngleGreater)
+            {
+                isCollsiion = false;
+                hand = null;
+                spinning = true;
+                firstTime = false;
+            }
             // Microsoft.MixedReality.Toolkit.Input.HandJointUtils.TryGetJointPose(TrackedHandJoint.IndexTip, Handedness.Right, out MixedRealityPose pose);
-            isCollsiion = false;
-            hand = null;
-            spinning = true;
-            firstTime = false;
+           
             
 
            // Debug.Log(collision.gameObject.transform.position);
@@ -133,7 +152,7 @@ public class CheckCollision : MonoBehaviour
       //  this.transform.eulerAngles = new Vector3(0.0f, 0.0f, maxAngle + startAngle);
         spinning = false;
 
-        yield return new WaitForSecondsRealtime(20);
+        yield return new WaitForSecondsRealtime(5);
        // if(trigger != null)
         trigger.GameFinished();
         

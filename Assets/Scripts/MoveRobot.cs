@@ -9,11 +9,14 @@ public class MoveRobot : MonoBehaviour
     
     private NavMeshAgent agent;
     private Animator animator;
+    //private Animation anim;
     private bool _isWalking = false;
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();   
-        animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+         animator = GetComponent<Animator>();
+        // anim = GetComponent<Animation>();
+
     }
 
     // Update is called once per frame
@@ -21,10 +24,11 @@ public class MoveRobot : MonoBehaviour
     {
        
             agent.SetDestination(PlayAudio.LocationTransform.position);
-            animator.SetBool("isWalking", _isWalking);
+           // animator.SetBool("isWalking", _isWalking);
             if (agent.remainingDistance > 0.01)
             {
                 _isWalking = true;
+            
 
 
             }
@@ -34,8 +38,20 @@ public class MoveRobot : MonoBehaviour
                 _isWalking = false;
             }
 
-        
-       
+
+        if (_isWalking)
+        {
+            animator.Play("Walking");
+           // anim.Play("Walking");
+            
+
+        }
+        else
+        {
+            animator.Play("Idle");
+
+        }
+        //anim.Play("Idle");*/
 
     }
 }

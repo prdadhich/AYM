@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CheckTrigger : MonoBehaviour
 {
+    CheckCollision checkCollison;
+    public GameObject wheelObject;
+
     private  Collider Arrow;
     public Collider wheel;
 
@@ -14,6 +17,7 @@ public class CheckTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        checkCollison = wheelObject.GetComponent<CheckCollision>(); 
         Arrow = GetComponent<Collider>(); 
         //wheel = GetComponent<Collider>();   
         Arrow.enabled = false;
@@ -63,6 +67,14 @@ public class CheckTrigger : MonoBehaviour
             Debug.Log("check trigger"+other.gameObject.name);
             count++;
             WinWhat = other.gameObject.name;    
+
+            if(other.gameObject.name == "blue")
+            {
+
+                count = 0;
+                checkCollison.firstTime = true;
+            }
+
 
         }
     }
